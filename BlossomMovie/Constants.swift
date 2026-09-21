@@ -14,7 +14,7 @@ struct Constants {
     static let upcomingString = "Upcoming"
     static let searchString = "Search"
     static let downloadString = "Downloads"
-    
+    static let playString = "Play"
     
     // Icons
     static let homeIcon = "house"
