@@ -11,27 +11,37 @@ struct HomeView: View {
     var heroTestTitle = Constants.testTitleURL
     
     var body: some View {
-        VStack {
-            AsyncImage(url: URL(string: heroTestTitle)) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-            } placeholder: {
-                ProgressView()
-            }
-            
-            HStack {
-                Button {
+        GeometryReader { geo in
+            ScrollView {
+                LazyVStack {
+                    AsyncImage(url: URL(string: heroTestTitle)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: geo.size.width, height: geo.size.height * 0.85)
                     
-                } label: {
-                    Text(Constants.playString)
-                        .ghostButton()
-                }
-                Button {
+                    HStack {
+                        Button {
+                            
+                        } label: {
+                            Text(Constants.playString)
+                                .ghostButton()
+                        }
+                        Button {
+                            
+                        } label: {
+                            Text(Constants.downloadString)
+                                .ghostButton()
+                        }
+                    }
                     
-                } label: {
-                    Text(Constants.downloadString)
-                        .ghostButton()
+                    HorizontalListView(header: Constants.trendingMovieString)
+                    HorizontalListView(header: Constants.trendingTvString)
+                    HorizontalListView(header: Constants.topRatedMovieString)
+                    HorizontalListView(header: Constants.topRatedTvString )
                 }
             }
         }
