@@ -15,10 +15,14 @@ struct Constants {
     static let searchString = "Search"
     static let downloadString = "Downloads"
     
+    
     // Icons
     static let homeIcon = "house"
     static let upcomingIcon = "play.circle"
     static let searchIcon = "magnifyingglass"
     static let downloadIcon = "arrow.down.to.line"
     
+    // URLs
+    static let testTitleURL = "https://image.tmdb.org/t/p/w500/nnl6OWkyPpuMm595hmAxNW3rZFn.jpg"
+
 }
