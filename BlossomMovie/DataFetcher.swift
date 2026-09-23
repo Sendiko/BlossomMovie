@@ -6,3 +6,40 @@
 //
 
 import Foundation
+
+let tmdbBaseURL = APIConfig.shared?.tmdbBaseURL
+let tmdbAPIKey = APIConfig.shared?.tmdbAPIKey
+
+func fetchTitles(for media: String) async throws -> [Title] {
+    guard let baseURL = tmdbBaseURL else {
+        throw NetworkError.missingConfig
+    }
+    guard let apiKey = tmdbAPIKey else {
+        throw NetworkError.missingConfig
+    }
+    
+    guard let fetchTitlesURL = URL(string: baseURL)?
+        .appending(path: "3/trending/\(media)/day")
+        .appending(queryItems: [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ]) else {
+        throw NetworkError.urlBuildFailed
+    }
+    
+    print(fetchTitlesURL)
+    
+    let(data, urlResponse) = try await URLSession.shared.data(from: fetchTitlesURL)
+    
+    guard let response = urlResponse as? HTTPURLResponse, response.statusCode == 200 else {
+        throw NetworkError.badUrlResponse(underlyingError: NSError(
+            domain: "DataFetcher",
+            code: (urlResponse as? HTTPURLResponse)?.statusCode ?? 500,
+            userInfo: [NSLocalizedDescriptionKey: "Invalid HTTP Response"]
+        ))
+    }
+    
+    let decoder = JSONDecoder()
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    
+    return try decoder.decode(ApiObject.self, from: data).results
+}
