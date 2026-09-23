@@ -22,14 +22,7 @@ struct ContentView: View {
             Tab(Constants.downloadString, systemImage: Constants.downloadIcon) {
                 Text(Constants.downloadString)
             }
-        }
-        .onAppear {
-            if let config = APIConfig.shared {
-                print(config.tmdbAPIKey)
-                print(config.tmdbBaseURL)
-            }
-        }
-    }
+        }    }
 }
 
 #Preview {
